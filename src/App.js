@@ -49,7 +49,7 @@ const App = () => {
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-    const newBook = {
+    const newBooks = {
       
       id: nanoid(),
       title: addFormData.title,
@@ -57,7 +57,7 @@ const App = () => {
       category: addFormData.category
     };
 
-    const newBooks = [...books, newBook];
+    const newBooks = [...books, newBooks];
     setBooks(newBooks);
   };
 
@@ -77,7 +77,7 @@ const App = () => {
 
     newBooks[index] = editedBook;
 
-    setBooks(newBook);
+    setBooks(newBooks);
     setEditBookId(null);
   };
 
@@ -105,7 +105,7 @@ const App = () => {
 
     newBooks.splice(index, 1);
 
-    setContacts(newBooks);
+    setBooks(newBooks);
   };
 
   return (
@@ -120,7 +120,7 @@ const App = () => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((books) => (
+            {books.map((books) => (
               <Fragment>
                 {editBookId === books.id ? (
                   <EditableRow
