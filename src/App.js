@@ -57,7 +57,7 @@ const App = () => {
     };
 
     const newBooks = [...books, newBook];
-    setContacts(newBooks);
+    setBooks(newBooks);
   };
 
   const handleEditFormSubmit = (event) => {
