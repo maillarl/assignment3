@@ -6,11 +6,12 @@ import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 
 const App = () => {
-  const [books, setBooks] = useState(data);
+  const [contacts, setContacts] = useState(data);
   const [addFormData, setAddFormData] = useState({
     title: "",
     author: "",
     category: "",
+
   });
 
   const [editFormData, setEditFormData] = useState({
@@ -18,7 +19,6 @@ const App = () => {
     author: "",
     category: "",
   });
-    
 
   const [editBookId, setEditBookId] = useState(null);
 
@@ -50,15 +50,14 @@ const App = () => {
     event.preventDefault();
 
     const newBook = {
-      
       id: nanoid(),
       title: addFormData.title,
       author: addFormData.author,
       category: addFormData.category
     };
 
-    const newBook = [...books, newBooks];
-    setBooks(newBook);
+    const newBooks = [...books, newBook];
+    setContacts(newBooks);
   };
 
   const handleEditFormSubmit = (event) => {
@@ -71,24 +70,24 @@ const App = () => {
       category: editFormData.category
     };
 
-    const newBook = [...books];
+    const newBooks = [...books];
 
-    const index = books.findIndex((books) => books.id === editBookId);
+    const index = books.findIndex((book) => book.id === editBookId);
 
-    newBook[index] = editedBook;
+    newBooks[index] = editedBook;
 
-    setBooks(newBook);
+    setBooks(newBooks);
     setEditBookId(null);
   };
 
-  const handleEditClick = (event, books) => {
+  const handleEditClick = (event, book) => {
     event.preventDefault();
-    setEditBookId(books.id);
+    setEditBookId(book.id);
 
     const formValues = {
-      title: books.title,
-      author: books.author,
-      category: books.category
+      title: book.title,
+      author: book.author,
+      category: book.category,
     };
 
     setEditFormData(formValues);
@@ -99,13 +98,13 @@ const App = () => {
   };
 
   const handleDeleteClick = (bookId) => {
-    const newBook = [...books];
+    const newBooks = [...books];
 
-    const index = books.findIndex((books) => books.id === bookId);
+    const index = books.findIndex((book) => book.id === bookId);
 
-    newBook.splice(index, 1);
+    newBooks.splice(index, 1);
 
-    setBooks(newBook);
+    setBooks(newBooks);
   };
 
   return (
@@ -117,12 +116,13 @@ const App = () => {
               <th>Title</th>
               <th>Author</th>
               <th>Category</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {books.map((books) => (
+            {books.map((book) => (
               <Fragment>
-                {editBookId === books.id ? (
+                {editBookId === book.id ? (
                   <EditableRow
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
@@ -130,7 +130,7 @@ const App = () => {
                   />
                 ) : (
                   <ReadOnlyRow
-                    book={books}
+                    book={book}
                     handleEditClick={handleEditClick}
                     handleDeleteClick={handleDeleteClick}
                   />
@@ -141,7 +141,7 @@ const App = () => {
         </table>
       </form>
 
-      <h2>Add a Book</h2>
+      <h2>Add a Contact</h2>
       <form onSubmit={handleAddFormSubmit}>
         <input
           type="text"
@@ -161,11 +161,11 @@ const App = () => {
           type="text"
           name="category"
           required="required"
-          placeholder="Enter a category..."
+          placeholder="Enter a category ..."
           onChange={handleAddFormChange}
         />
-       
-        <button type="submit">Add book</button>
+        
+        <button type="submit">Add</button>
       </form>
     </div>
   );
