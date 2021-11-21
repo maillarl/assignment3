@@ -6,7 +6,7 @@ import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 
 const App = () => {
-  const [contacts, setContacts] = useState(data);
+  const [books, setBooks] = useState(data);
   const [addFormData, setAddFormData] = useState({
     title: "",
     author: "",
@@ -141,7 +141,7 @@ const App = () => {
         </table>
       </form>
 
-      <h2>Add a Contact</h2>
+      <h2>Add a book</h2>
       <form onSubmit={handleAddFormSubmit}>
         <input
           type="text"
