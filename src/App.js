@@ -49,7 +49,7 @@ const App = () => {
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-    const newBooks = {
+    const newBook = {
       
       id: nanoid(),
       title: addFormData.title,
@@ -57,8 +57,8 @@ const App = () => {
       category: addFormData.category
     };
 
-    const newBooks = [...books, newBooks];
-    setBooks(newBooks);
+    const newBook = [...books, newBooks];
+    setBooks(newBook);
   };
 
   const handleEditFormSubmit = (event) => {
@@ -71,13 +71,13 @@ const App = () => {
       category: editFormData.category
     };
 
-    const newBooks = [...books];
+    const newBook = [...books];
 
     const index = books.findIndex((books) => books.id === editBookId);
 
-    newBooks[index] = editedBook;
+    newBook[index] = editedBook;
 
-    setBooks(newBooks);
+    setBooks(newBook);
     setEditBookId(null);
   };
 
@@ -99,13 +99,13 @@ const App = () => {
   };
 
   const handleDeleteClick = (bookId) => {
-    const newBooks = [...books];
+    const newBook = [...books];
 
     const index = books.findIndex((books) => books.id === bookId);
 
-    newBooks.splice(index, 1);
+    newBook.splice(index, 1);
 
-    setBooks(newBooks);
+    setBooks(newBook);
   };
 
   return (
