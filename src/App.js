@@ -1,73 +1,174 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, Fragment } from "react";
+import { nanoid } from "nanoid";
+import "./App.css";
+import data from "./mock-data.json";
+import ReadOnlyRow from "./components/ReadOnlyRow";
+import EditableRow from "./components/EditableRow";
 
-export default class Form extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: '',
-      title: '',
-      author: '',
-      category: ''
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const App = () => {
+  const [books, setBooks] = useState(data);
+  const [addFormData, setAddFormData] = useState({
+    title: "",
+    author: "",
+    category: "",
+  });
 
-  handleChange(event) {
-    const inputValue = event.target.value;
-    const stateField = event.target.name;
-    this.setState({
-      [stateField]: inputValue,
-    });
-    console.log(this.state);
-  }
-  async handleSubmit(event) {
+  const [editFormData, setEditFormData] = useState({
+    title: "",
+    author: "",
+    category: "",
+  });
+    
+
+  const [editBookId, setEditBookId] = useState(null);
+
+  const handleAddFormChange = (event) => {
     event.preventDefault();
-    const{id,title,author,category}=this.state;
-    await axios.post(
-      'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/',
-      { key1: `${id}, ${title},${author},${category}` }
-    );
-  }
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>Id:</label>
-          <input
-            type="text"
-            name="id"
-            onChange={this.handleChange}
-            value={this.state.id}
-          />
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
 
-          <label>Title:</label>
-          <input
-            type="text"
-            name="title"
-            onChange={this.handleChange}
-            value={this.state.title}
-          />
-          <label>Author:</label>
-          <input
-            type="text"
-            name="author"
-            onChange={this.handleChange}
-            value={this.state.author}
-          />
-          <label>Category:</label>
-          <input
-            type="text"
-            name="category"
-            onChange={this.handleChange}
-            value={this.state.category}
-          />
+    const newFormData = { ...addFormData };
+    newFormData[fieldName] = fieldValue;
 
-          <button type="submit">Add</button>
-        </form>
-      </div>
-    );
-  }
-}
+    setAddFormData(newFormData);
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
+  };
+
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
+    const newBook = {
+      
+      id: nanoid(),
+      title: addFormData.title,
+      author: addFormData.author,
+      category: addFormData.category
+    };
+
+    const newBooks = [...books, newBook];
+    setBooks(newBooks);
+  };
+
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    const editedBook = {
+      id: editBookId,
+      title: editFormData.title,
+      author: editFormData.author,
+      category: editFormData.category
+    };
+
+    const newBooks = [...books];
+
+    const index = books.findIndex((books) => books.id === editBookId);
+
+    newBooks[index] = editedBook;
+
+    setBooks(newBook);
+    setEditBookId(null);
+  };
+
+  const handleEditClick = (event, books) => {
+    event.preventDefault();
+    setEditBookId(books.id);
+
+    const formValues = {
+      title: books.title,
+      author: books.author,
+      category: books.category
+    };
+
+    setEditFormData(formValues);
+  };
+
+  const handleCancelClick = () => {
+    setEditBookId(null);
+  };
+
+  const handleDeleteClick = (bookId) => {
+    const newBooks = [...books];
+
+    const index = books.findIndex((books) => books.id === bookId);
+
+    newBooks.splice(index, 1);
+
+    setContacts(newBooks);
+  };
+
+  return (
+    <div className="app-container">
+      <form onSubmit={handleEditFormSubmit}>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map((books) => (
+              <Fragment>
+                {editBookId === books.id ? (
+                  <EditableRow
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    handleCancelClick={handleCancelClick}
+                  />
+                ) : (
+                  <ReadOnlyRow
+                    book={books}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </form>
+
+      <h2>Add a Book</h2>
+      <form onSubmit={handleAddFormSubmit}>
+        <input
+          type="text"
+          name="title"
+          required="required"
+          placeholder="Enter a title..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="author"
+          required="required"
+          placeholder="Enter an author..."
+          onChange={handleAddFormChange}
+        />
+        <input
+          type="text"
+          name="category"
+          required="required"
+          placeholder="Enter a category..."
+          onChange={handleAddFormChange}
+        />
+       
+        <button type="submit">Add book</button>
+      </form>
+    </div>
+  );
+};
+
+export default App;
