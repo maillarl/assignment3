@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Form from './Form.js';
-
+import axios from 'axios';
 
 export default class Form extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ export default class Form extends Component {
   }
   async handleSubmit(event) {
     event.preventDefault();
-    const { name, message } = this.state;
+    const{id,title,author,category}=this.state;
     await axios.post(
       'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/',
       { key1: `${id}, ${title},${author},${category}` }
