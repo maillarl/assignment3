@@ -32,6 +32,7 @@ const App = () => {
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
+  
   };
 
   const handleEditFormChange = (event) => {
@@ -58,9 +59,22 @@ const App = () => {
 
     const newBooks = [...books, newBook];
     setBooks(newBooks);
-  };
+    axios({
+      method: 'POST',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      data: newBooks
+  })
+  .then(function (reponse) {
+      //On traite la suite une fois la réponse obtenue 
+      console.log(reponse);
+  })
+  .catch(function (erreur) {
+      //On traite ici les erreurs éventuellement survenues
+      console.log(erreur);
+  }
+  )};
 
-  const handleEditFormSubmit = (event) => {
+  function handleEditFormSubmit(event) {
     event.preventDefault();
 
     const editedBook = {
@@ -78,6 +92,20 @@ const App = () => {
 
     setBooks(newBooks);
     setEditBookId(null);
+
+    axios({
+      method: 'POST',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      data: newBooks
+  })
+  .then(function (reponse) {
+      //On traite la suite une fois la réponse obtenue 
+      console.log(reponse);
+  })
+  .catch(function (erreur) {
+      //On traite ici les erreurs éventuellement survenues
+      console.log(erreur);
+  })
   };
 
   const handleEditClick = (event, book) => {
@@ -105,6 +133,20 @@ const App = () => {
     newBooks.splice(index, 1);
 
     setBooks(newBooks);
+
+    axios({
+      method: 'DELETE',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      data: newBooks
+  })
+  .then(function (reponse) {
+      //On traite la suite une fois la réponse obtenue 
+      console.log(reponse);
+  })
+  .catch(function (erreur) {
+      //On traite ici les erreurs éventuellement survenues
+      console.log(erreur);
+  });
   };
 
   return (
