@@ -62,7 +62,7 @@ const App = () => {
     setBooks(newBooks);
     axios({
       method: 'POST',
-      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/',
       data: newBooks
   })
   .then(function (reponse) {
@@ -96,7 +96,7 @@ const App = () => {
 
     axios({
       method: 'POST',
-      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/',
       data: newBooks
   })
   .then(function (reponse) {
@@ -137,7 +137,7 @@ const App = () => {
 
     axios({
       method: 'DELETE',
-      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books',
+      url: 'https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/',
       data: newBooks
   })
   .then(function (reponse) {
