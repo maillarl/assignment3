@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://maillarl.github.io/assignment3",
-  "proxy": "https://rcyg32ptue.execute-api.us-east-2.amazonaws.com/books",
+  "proxy": "https://p60c8tz94d.execute-api.eu-west-3.amazonaws.com/books",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
