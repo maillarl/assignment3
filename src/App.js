@@ -5,7 +5,6 @@ import data from "./mock-data.json";
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 
-const baseUrl = "https://p60c8tz94d.execute-api.eu-west-3.amazonaws.com/books"
 const App = () => {
   const [books, setBooks] = useState(data);
   const [addFormData, setAddFormData] = useState({
@@ -79,7 +78,7 @@ const App = () => {
 
     setBooks(newBooks);
     setEditBookId(null);
-    fetch('baseUrl').then((response) => {
+    fetch('https://p60c8tz94d.execute-api.eu-west-3.amazonaws.com/books').then((response) => {
       console.log(response)
     })
 
